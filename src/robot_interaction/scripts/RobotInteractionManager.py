@@ -43,11 +43,11 @@ class RobotInteractionManager:
             )
 
 
-    # def speak(self, data):
-    #     tts = gTTS(data)
-    #     tts.save("speech.mp3")
-    #     os.system("mpg321 speech.mp3")
-    #     os.remove("speech.mp3")
+    def speak(self, data):
+        tts = gTTS(data)
+        tts.save("speech.mp3")
+        os.system("mpg321 speech.mp3")
+        os.remove("speech.mp3")
 
     def speech_callback(self, msg):
         transcribed_data = msg.data
@@ -60,7 +60,7 @@ class RobotInteractionManager:
             
         elif food_ordered == "done":
             rospy.loginfo(f"Your bill will be RM{self.bill}")
-            # self.speak(f"Your bill will be RM{self.bill}")
+            self.speak(f"Your bill will be RM{self.bill}")
             self.save_bill()
             self.bill = 0
         else:

@@ -45,5 +45,4 @@ env/
 # params/*.yaml.local
 # credentials.txt
 # *.env
-*.txt
-*.csv
+**/data/

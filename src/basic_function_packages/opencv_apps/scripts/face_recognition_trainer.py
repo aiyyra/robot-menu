@@ -63,7 +63,7 @@ class FaceRecognitionTrainer(object):
         self.name = ""
         self.ok = False
         
-        self.counter_file_path = self.getPath("openvc_apps", "user_id_counter.txt")
+        self.counter_file_path = self.getPath("opencv_apps", "user_id_counter.txt")
         self.db_file_path = self.getPath("robot_interaction", "user_database.csv") 
 
         self.sync = message_filters.TimeSynchronizer([self.img_sub, self.face_sub],
@@ -124,9 +124,13 @@ class FaceRecognitionTrainer(object):
     def run(self):
         rospy.wait_for_service("train")
         train = rospy.ServiceProxy("train", FaceRecognitionTrain)
-        self.name = input("Please input your name and press Enter: ")
-        while len(self.name) <= 0 or input("Your name is %s. Correct? [y/n]: " % self.name) not in ["", "y", "Y"]:
-            self.name = input("Please input your name and press Enter: ")
+        
+        name = input("Please input your name and press Enter: ")
+        id = self.getId()
+        self.label= name + "_" + str(id)
+        
+        if len(name) <= 0 or input("Your name is %s. Correct? [y/n]: " % name) not in ["", "y", "Y"]:
+            name = input("Please input your name and press Enter: ")
 
         input("Please stand at the center of the camera and press Enter: ")
         while True:
@@ -136,13 +140,11 @@ class FaceRecognitionTrainer(object):
                 rospy.sleep(1)
             if input("One more picture? [y/n]: ") not in ["", "y", "Y"]:
                 break
-        print("sending to trainer...")
-        id = self.getId()
-        self.label= self.name + "_" +id
-        
+        print("sending to trainer.. .")
+
         res = train(self.req)
         if res.ok:
-            self.save_user(self.name, self.id)
+            self.save_user(name, id)
             print("OK. Trained successfully!")
         else:
             print("NG. Error: %s" % res.error)

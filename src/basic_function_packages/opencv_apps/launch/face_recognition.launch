@@ -1,7 +1,7 @@
 <launch>
   <arg name="launch_face_detection" default="true" />
-  <arg name="launch_trainer" default="true" />
-  <!-- <arg name="launch_trainer" default="false" /> -->
+  <!-- <arg name="launch_trainer" default="true" /> -->
+  <arg name="launch_trainer" default="false" />
 
   <arg name="use_opencv3" default="false" />
   <arg name="use_opencv3_1" default="false" />

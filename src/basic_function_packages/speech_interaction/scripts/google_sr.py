@@ -15,7 +15,7 @@ def googlesr():
         
         with sr.Microphone() as source:
             print(">>> Say something!")
-            #audio = r.listen(source)
+            # audio = r.listen(source)
             audio = r.record(source, duration=3)
             
         # recognize speech using Google Speech Recognition

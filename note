@@ -1,2 +1,0 @@
-roslaunch usb_cam usb_cam-test.launch
-roslaunch opencv_apps face_recognition.launch image:=/usb_cam/image_raw

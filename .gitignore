@@ -1,0 +1,47 @@
+# ROS specific
+build/
+devel/
+install/
+log/
+test_results/
+*.rosinstall
+*.rosdeps
+
+# Editor/IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python specific
+__pycache__/
+*.pyc
+*.pyd
+*.egg-info/
+pip-wheel-metadata/
+.Python
+venv/
+env/
+
+# C++ specific
+*.o
+*.lo
+*.la
+*.al
+*.libs
+*.so
+*.a
+*.bak
+*.out
+*.tmp
+
+# Configuration/Sensitive data (use with caution and adjust as needed)
+# config/*.yaml.local
+# params/*.yaml.local
+# credentials.txt
+# *.env

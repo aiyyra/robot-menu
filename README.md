@@ -17,14 +17,14 @@ mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/
 catkin_make
 ```
-![ROS Workspace Build Screenshot](docs/catkinmake_output.png)
+![ROS Workspace Build Screenshot](docs/catkinmake_output.PNG)
 
 ## Step 2: Source Workspace in `.bashrc`
 ```bash
 echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
-![ROS Workspace Build Screenshot](docs/bash.png)
+![ROS Workspace Build Screenshot](docs/bash.PNG)
 
 ## Step 3: Add Packages to `src/`
 ```bash

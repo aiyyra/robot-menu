@@ -11,7 +11,7 @@ from gtts import gTTS
 
 class RobotInteractionManager:
     def __init__(self):
-        self.food = {"sushi": 3, "fries": 2,"water":1}
+        self.food = {"sushi": 3, "fries": 2,"water":1, "burger": 4, "coffee": 1}
         self.bill = 0
         self.person_name = None
         self.confidence_level = None
@@ -65,15 +65,49 @@ class RobotInteractionManager:
             price = self.food[food_ordered]
             self.update_single_person_order(self.person_name, food_ordered, price)
             rospy.loginfo(self.bill_session)
+            self.speak(f"{food_ordered} added to order for {str(self.person_name).split('_')[0]}")
             self.bill += price
             rospy.loginfo(f"{food_ordered} ordered with price {price}")
             
         elif food_ordered == "done":
-            rospy.loginfo(f"Your bill will be RM{self.bill}")
-            self.speak(f"Your bill will be RM{self.bill}")
+            bill = self.bill_session["table_order"]
+            for person in bill:
+                name = str(person["name"]).split("_")[0]
+                order = []
+                temp_bill = 0
+                for item in person["order"]:
+                    order.append(item['item'])
+                    temp_bill += self.food[item['item']]
+                rospy.loginfo(f"Name:{name}\nOrder:{order}")
+
+                if order == []: continue
+                self.speak(f"{name} order {order}, your bill will be RM{temp_bill}")
+            
+            self.speak(f"Your overall bill will be RM{self.bill}")
             self.save_bill()
             self.bill = 0
         else:
+            temp_str = str(food_ordered).split(" ")
+            for x in temp_str :
+                if x == "done": 
+                    bill = self.bill_session["table_order"]
+                    for person in bill:
+                        name = str(person["name"]).split("_")[0]
+                        order = []
+                        temp_bill = 0
+                        for item in person["order"]:
+                            order.append(item['item'])
+                            temp_bill += self.food[item['item']]
+                        rospy.loginfo(f"Name:{name}\nOrder:{order}")
+
+                        if order == []: continue
+                        self.speak(f"{name} order {order}, your bill will be RM{temp_bill}")
+                    
+                    self.speak(f"Your overall bill will be RM{self.bill}")
+                    self.save_bill()
+                    self.bill = 0
+
+
             rospy.loginfo(f"{food_ordered} is not in our menu")
 
     def is_unique(self, customer):
@@ -89,11 +123,12 @@ class RobotInteractionManager:
                 if self.is_unique(face.label):
                     self.unique_customer[face.label]=0
                     self.add_person_to_table(face.label)
+                    self.speak(f"Hello {str(face.label).split('_')[0]},")
                     
                     recommendation = self.getLatestOrder(face.label)
                     if recommendation is not None:
                         name = str(face.label).split("_")[0]
-                        self.speak(f"Hello {name}, would you like some {recommendation}")
+                        self.speak(f"would you like some {recommendation}")
                 self.person_name = str(face.label)
                 self.confidence_level = face.confidence
                 

@@ -17,14 +17,14 @@ mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/
 catkin_make
 ```
-![ROS Workspace Build Screenshot](docs/catkinmake_output.png)
+![ROS Workspace Build Screenshot](docs/catkinmake_output.PNG)
 
 ## Step 2: Source Workspace in `.bashrc`
 ```bash
 echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
-![ROS Workspace Build Screenshot](docs/bash.png)
+![ROS Workspace Build Screenshot](docs/bash.PNG)
 
 ## Step 3: Add Packages to `src/`
 ```bash
@@ -52,3 +52,22 @@ rqt_graph
     Missing packages: Use rosdep install to install dependencies
 
     Topics not publishing: Check rosnode list and rostopic list for debugging
+
+## try 
+Steps to start our system manually:
+
+1. roscore
+
+
+2. roslaunch usb_cam usb_cam-test.launch (we connect robot to camera by USB)
+
+
+3. roslaunch opencv_apps face_recognition.launch image:=/usb_cam/image_raw (could adjust .launch file to train) 
+
+
+4. rosrun robot_interaction RobotInteractionManager.py
+
+
+5. rosrun speech_interaction google_sr.py
+
+
